@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three JS Class Demo</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    
+    <script type="module">
+        import * as THREE from './Js/three.module.js';
+        var width = window.innerWidth- 20;
+        var height = window.innerHeight - 50;
+        var myScene = new THREE.Scene();
+        
+        var myCamera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, .1, 1000);
+        myCamera.position.z = 2;
+        myCamera.updateProjectionMatrix();
+        
+        var myRenderer = new THREE.WebGLRenderer({antialias:true});
+        myRenderer.setClearColor("#e5e5e5");
+        myRenderer.setSize(width, height);
+        document.body.appendChild(myRenderer.domElement);
+
+        window.addEventListener('resize',() => {
+            myRenderer.setSize(width,  height);
+            myCamera.aspect = width/height;
+            myCamera.updateProjectionMatrix();
+        })
+        
+
+        var light = new THREE.PointLight(0xFFFFFF, 1,500);
+        light.position.set(10,0,25);
+        myScene.add(light);
+
+        const geometry = new THREE.BoxGeometry(1,1,1);
+        const geometryTwo = new THREE.BoxGeometry(1,0.3,2);
+        
+        const circle = new THREE.CircleGeometry(1.5, 45, 1, 5);
+        //radius, segments, thetaStart, thetaLength
+
+        const material = new THREE.MeshLambertMaterial({color: 0xFF1144});
+        const materialTwo = new THREE.MeshLambertMaterial({color: 0x7744F});
+        const materialThree = new THREE.MeshLambertMaterial({color: 0xFF44FF});
+        
+        const mesh = new THREE.Mesh(geometry, material);
+        const meshTwo = new THREE.Mesh(geometryTwo, materialTwo);
+        const meshThree = new THREE.Mesh(circle, materialThree);
+
+        myScene.add(mesh);
+        myScene.add(meshTwo);
+        myScene.add(meshThree);
+
+        var render = function()
+        {
+            requestAnimationFrame(render);
+            mesh.rotation.z+= 0.02;
+            mesh.rotation.y += 0.01;
+            myRenderer.render(myScene, myCamera);
+        }
+
+        render();
+        //myRenderer.render(myScene, myCamera);
+    </script>
+</body>
+
+
+</html>
