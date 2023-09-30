@@ -39,6 +39,8 @@
         const geometryTwo = new THREE.BoxGeometry(0.7, 0.3, 1);
         //const sphereGeo = new THREE.SphereGeometry(1, 1, 1, 1, 1, 1);
         const sphereGeo = new THREE.SphereGeometry(.6,16,31);
+        const sphereGeoB = new THREE.SphereGeometry(.6,16,31);
+
         const coneGeo = new THREE.CylinderGeometry(.5, 0, 1);
 
         const customShape = new THREE.Shape();
@@ -63,7 +65,7 @@
 
 
         const material = new THREE.MeshLambertMaterial({color: 0xFFD700});
-        const materialTwo = new THREE.MeshLambertMaterial({color: 0x7744F});
+        const materialTwo = new THREE.MeshLambertMaterial({color: 0x2E86C1});
         const materialThree = new THREE.MeshLambertMaterial({color: 0x6664FF});
         const materialFour = new THREE.MeshLambertMaterial({color: 0x87CEEB});
         const materialFive = new THREE.MeshLambertMaterial({color: 0xB22222});
@@ -73,6 +75,7 @@
         const meshTwo = new THREE.Mesh(geometryTwo, materialTwo);
         const meshThree = new THREE.Mesh(sphereGeo, materialThree);
         const meshFour = new THREE.Mesh(coneGeo, materialFour);
+        const meshSix = new THREE.Mesh(sphereGeoB, materialTwo);
 
         const meshFiveA = new THREE.Mesh(customShapeGeoA, materialSIx);
         const meshFiveB = new THREE.Mesh(customShapeGeoB, materialSIx);
@@ -91,10 +94,12 @@
         customShapeGeoC.translate( -0.3, 0.5, -0.4);
         customShapeGeoD.translate( 3, -1, -1);
         customShapeGeoE.translate( 5, -1, -5);
+
+        sphereGeoB.translate(0.01,0,0);
         //squareGeo.moveTo(1,1);
 
         myScene.add(mesh);
-        myScene.add(meshTwo);
+       // myScene.add(meshTwo);
         myScene.add(meshThree);
         myScene.add(meshFour);
 
@@ -103,6 +108,7 @@
         myScene.add(meshFiveC);
         myScene.add(meshFiveD);
         myScene.add(meshFiveE);
+        myScene.add(meshSix);
 
         var render = function()
         {
@@ -118,7 +124,11 @@
             meshFiveD.rotation.y +=.01;
             meshFiveE.rotation.y -=.01;
 
+            //Got this cool effect by offesetting one of the spheres by a small ammount
+            //and rotating one of them.
             meshFour.rotation.y += .05;
+            meshSix.rotation.y += .01;
+
 
             myRenderer.render(myScene, myCamera);
         }
